@@ -1,0 +1,30 @@
+From 9cd5d1d5eb8bdeecfcf544971b6a9f4c20718f80 Mon Sep 17 00:00:00 2001
+From: Evan Nemerson <evan@coeus-group.com>
+Date: Mon, 11 Feb 2013 13:04:31 -0800
+Subject: [PATCH] girparser: be a bit more forgiving about unexpected elements
+ in a GIR
+
+---
+ vala/valagirparser.vala |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/vala/valagirparser.vala b/vala/valagirparser.vala
+index 8256ef2..0af275c 100644
+--- a/vala/valagirparser.vala
++++ b/vala/valagirparser.vala
+@@ -1233,9 +1233,9 @@ public class Vala.GirParser : CodeVisitor {
+ 	}
+ 
+ 	void end_element (string name) {
+-		if (current_token != MarkupTokenType.END_ELEMENT || reader.name != name) {
+-			// error
+-			Report.error (get_current_src (), "expected end element of `%s'".printf (name));
++		while (current_token != MarkupTokenType.END_ELEMENT || reader.name != name) {
++			Report.warning (get_current_src (), "expected end element of `%s'".printf (name));
++			skip_element ();
+ 		}
+ 		next ();
+ 	}
+-- 
+1.7.10.4
+

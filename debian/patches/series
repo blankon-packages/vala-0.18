@@ -1,0 +1,3 @@
+girparser-be-a-bit-more-forgiving-about-unexpected-e.patch
+99_ltmain_as-needed.patch
+valagirparser-Ignore-the-new-instance-parameter-tag.patch
